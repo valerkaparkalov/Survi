@@ -2,6 +2,8 @@ package com.company;
 
 public class Main  {
     public static void main(String[] args) {
+        Backpack.backPack();
+
         View.enterGame();
         System.out.println("====================================");
         View.gameInfo();

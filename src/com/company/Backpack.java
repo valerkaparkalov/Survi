@@ -3,11 +3,14 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Backpack {
-//    List<Items> backpack=new ArrayList<String>(10);
-//backpack.
-//    }
 
+    public static void backPack() {
 
-//создать масив с заполнением сумки вызвов метода где мы моем выбрать предмет из сумки и установить его
+        List<BackPackItems> backPackList = new ArrayList<>();
+backPackList.add(new BackPackItems('e'));
+        System.out.println(backPackList.size() + ""+backPackList.get(0));
+
+    }
 }

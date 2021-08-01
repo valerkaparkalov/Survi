@@ -22,20 +22,11 @@ public class Move {
     private boolean bool;
     private boolean notUseItem = false;
 
-//    private char [][] locats;
-
-//    public char[][] getLocats() {
-//        return locats;
-//    }
-//    public  void setLocats(char[][] locatsrnd) {
-//        this.locats = locatsrnd;
-//    }
-//
-
     public Move(Heroes heroes, GeneratLocat locate, Days days) {
         this.heroes = heroes;
         this.locate = locate;
         this.days = days;
+
     }
 
     //метод по ограничению видимости
@@ -213,6 +204,9 @@ public class Move {
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 //todo создать инвентарь с масивом
+                Backpack.backPack;
+
+
             }
             if (eatKey == '3') {
                 notUseItem=true;
