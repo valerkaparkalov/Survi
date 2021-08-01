@@ -13,6 +13,7 @@ public class AttackLog {
     public boolean attackLog() {
         boolean war = true;
         Random random = new Random();
+        int chance = random.nextInt(100);
         Zoo rndZoo = new Zoo();
         Scanner scr = new Scanner(System.in);
         rndZoo.setIdZoo(random.nextInt(3) + 1);
@@ -36,6 +37,22 @@ public class AttackLog {
                             "здоровье зверя = " + rndZoo.getHpZoo());
                 if (rndZoo.getHpZoo() < 0) {
                     System.out.println("зверь побеждён");
+                    if(chance>=30){
+                        System.out.println("выпала еда\n" +
+                                "1) сьесть \n" +
+                                "2)положить в инвентарь\n" +
+                                "3)выкинуть");
+                        char dropEat = scr.next().charAt(0);
+                        if (dropEat=='1'){
+                            heroes.setEat(heroes.getEat()+20);
+                        }
+                        if(dropEat=='2'){
+                            //todo
+                        }
+                        if(dropEat=='3'){
+                            System.out.println("Зря вы так!");
+                        }
+                    }
 
 
                 }
@@ -48,7 +65,6 @@ public class AttackLog {
                 while (war!=false) {
                     System.out.println("попробовать сбежать");
                     String enters = scr.nextLine();
-                    int chance = random.nextInt(100);
                     System.out.println("ваш шанс на побег" + (chance) + '%');
                     if (chance <= 30) {
                         System.out.println("вам не удалось сбежать ");
