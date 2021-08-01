@@ -10,7 +10,7 @@ public class AttackLog {
         this.heroes = heroes;
     }
 
-    public boolean attackLog() {//я думал создать boolean Переменную что бы метод вернул тру или фолс но потом вспомнил что void
+    public boolean attackLog() {
         boolean war = true;
         Random random = new Random();
         Zoo rndZoo = new Zoo();
@@ -24,7 +24,7 @@ public class AttackLog {
                 "=====================\n" +
                 "здоровье зверя =" + rndZoo.getHpZoo() + "\n" +
                 "атака зверя = " + rndZoo.getAttackZoo());
-        while (rndZoo.getHpZoo() > 0 & war == true) {
+        while (rndZoo.getHpZoo() > 0 & war == true & heroes.getHp()>0) {
             System.out.println("1)Атаковать\n" +
                     "2)попытаться сбежать");
             char enter = scr.next().charAt(0);
@@ -40,8 +40,7 @@ public class AttackLog {
 
                 }
                 if (heroes.getHp() < 0) {
-
-
+                    break;
                 }
 
             }

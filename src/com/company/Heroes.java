@@ -98,7 +98,6 @@ public class Heroes {
         }
 
 
-
     }
 
     //рандомная атака генерация
@@ -107,10 +106,7 @@ public class Heroes {
         int attack = random.nextInt(getMaxAttack() - getMinAttack()) + getMinAttack();
         return attack;
     }
-    public static void  backPack(){
-        List listBackPack=new ArrayList();
 
-    };
 }
 
 

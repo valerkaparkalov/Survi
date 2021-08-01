@@ -21,10 +21,10 @@ public class Days {
         }
         heroes.setWater(heroes.getWater()-5);
         if (heroes.getEat() < 0) {
-            heroes.setHp(heroes.getHp()-5);
+            heroes.setHp(heroes.getHp()-2);
         }
         if (heroes.getWater()<0){
-            heroes.setHp(0);
+            heroes.setHp(heroes.getHp()-5);
         }
         setDays(days+1);
         if(days%5==0& heroes.getEat()<heroes.getMaxHp()){

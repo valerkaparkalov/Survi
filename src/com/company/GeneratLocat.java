@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Random;
 
-public class GeneratLocat {
+public  class GeneratLocat {
     Random random = new Random();
     private char[][] locats;
     private int lineHeroes;
@@ -83,18 +83,19 @@ public class GeneratLocat {
 
         setLocats(locatsrnd);
 
+
     }
     //вывод локации=массива
-    public static void printLocat(char[][] array) {
+//    public static void printLocat(char[][] array) {
+//
+//        for (int i = 0; i < array.length; i++) {
+//            for (int j = 0; j < array[i].length; j++) {
+//                System.out.print(array[i][j] + " ");
+//            }
+//            System.out.println(" ");
+//        }
 
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j] + " ");
-            }
-            System.out.println(" ");
-        }
-
-    }
+//    }
 
 
 }
