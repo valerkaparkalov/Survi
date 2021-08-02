@@ -50,8 +50,8 @@ public class Backpack {
         int valueItems = scr.next().charAt(0);
         if(valueItems<=backPackList.size()&valueItems>0){
         setEatItems(backPackList.get(valueItems-1).toString().charAt(0));
-        backPackList.remove(valueItems-1);}
-        System.out.println("что бы выйти нажмите e");
+        backPackList.remove((valueItems-1));}
+//        System.out.println("что бы выйти нажмите e");
 
 
 
