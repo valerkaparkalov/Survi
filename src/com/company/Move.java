@@ -1,11 +1,13 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Move {
     private Heroes heroes;
     private GeneratLocat locate;
+    private Backpack backpack;
 
 
     public GeneratLocat getLocate() {
@@ -22,11 +24,11 @@ public class Move {
     private boolean bool;
     private boolean notUseItem = false;
 
-    public Move(Heroes heroes, GeneratLocat locate, Days days) {
+    public Move(Heroes heroes, GeneratLocat locate, Days days, Backpack backpack) {
         this.heroes = heroes;
         this.locate = locate;
         this.days = days;
-
+        this.backpack = backpack;
     }
 
     //метод по ограничению видимости
@@ -141,16 +143,29 @@ public class Move {
                         "Походите!");
                 continue;
             }
-//            if (key == 'i') {
-//                // просмотр инвентаря
-//                for (int i=0; i < backpack.size(); i++)
-//                {
-//                    System.out.println(backpack.get(i));
-//                }
-//
-//            }
-//            continue;
-//        }
+            // просмотр инвентаря
+
+            if (key == 'i') {
+                backpack.viewBackPackList();
+                System.out.println("1) Сьесть что нибудь\n" +
+                        "2)Идти дальше");
+                char choice = scr.next().charAt(0);
+                if (choice == '1') {
+                    backpack.eatItems();
+                    if (backpack.getEatItems() == 'e') {
+                        heroes.setEat(heroes.getEat() + 20);
+                    }
+                    if (backpack.getEatItems() == 'w') {
+                        heroes.setWater(heroes.getWater() + 20);
+                    }
+
+                }
+                if (choice == '2') {
+                    System.out.println("Походите!!!");
+printLocatt(locate.getLocats());
+                }
+                continue;
+            }
 
 
             if (key == 'h') {
@@ -161,6 +176,7 @@ public class Move {
                         + "-" + heroes.getMaxAttack() + "|\n" +
                         "Походите!");
                 continue;
+
             }
             //printLocatt(locate.getLocats());
             if (valueNext != '_') {
@@ -172,9 +188,6 @@ public class Move {
             }
         }
     }
-
-
-
 
 
     private void checkValueNext(char valueN) {
@@ -191,9 +204,9 @@ public class Move {
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 heroes.setEat(heroes.getEat() + 20);
-                if(heroes.getEat()>100){
+                if (heroes.getEat() > 100) {
                     heroes.setEat(100);
-                    if(heroes.getHp()< heroes.getMaxHp()) {
+                    if (heroes.getHp() < heroes.getMaxHp()) {
                         heroes.setHp(heroes.getHp() + 10);
                     }
                 }
@@ -204,18 +217,18 @@ public class Move {
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 //todo создать инвентарь с масивом
-                Backpack.backPack;
+                backpack.addChartoBackPackListE();
 
 
             }
             if (eatKey == '3') {
-                notUseItem=true;
+                notUseItem = true;
                 valueOld = 'e';
                 printLocatt(locate.getLocats());
                 System.out.println("походите");
             }
         }
-           if (valueN == 'w') {
+        if (valueN == 'w') {
             System.out.println("вы нашли воду\n" +
                     "1) выпить \n" +
                     "2) положить в инвентарь\n" +
@@ -227,7 +240,7 @@ public class Move {
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 heroes.setWater(heroes.getWater() + 20);
-                if(heroes.getWater()>100){
+                if (heroes.getWater() > 100) {
                     heroes.setWater(100);
                 }
             }
@@ -237,51 +250,53 @@ public class Move {
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 //todo создать инвентарь с масивом
+                backpack.addChartoBackPackListW();
+
             }
             if (eatKey == '3') {
                 valueOld = 'w';
-                notUseItem=true;
+                notUseItem = true;
+                printLocatt(locate.getLocats());
+                System.out.println("походите");
+
+            }
+
+        }
+        if (valueN == 'z') {
+            System.out.println("вы встретили зверя");
+            AttackLog war = new AttackLog(heroes);
+            if (war.attackLog() == true) {
+                valueOld = '_';
+                char[][] locats = locate.getLocats();
+                locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
+                if (heroes.getHp() > 0) {
+                    printLocatt(locate.getLocats());
+                    System.out.println("походите");
+                }
+            } else {
+                valueOld = 'z';
+                notUseItem = true;
                 printLocatt(locate.getLocats());
                 System.out.println("походите");
 
             }
         }
-        if (valueN == 'z') {
-            System.out.println("вы встретили зверя");
-                AttackLog war = new AttackLog(heroes);
-                if (war.attackLog()==true) {
-                    valueOld = '_';
-                    char[][] locats = locate.getLocats();
-                    locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
-                   if(heroes.getHp()>0){
-                       printLocatt(locate.getLocats());
-                    System.out.println("походите");
-                   }
-                } else {
-                    valueOld = 'z';
-                    notUseItem=true;
-                    printLocatt(locate.getLocats());
-                    System.out.println("походите");
-
-            }
-        }
-        if(valueN=='0'){
+        if (valueN == '0') {
             System.out.println("шагнуть в портал?\n" +
                     "1) заходим \n" +
                     "2) ничего не делаем");
-            char stepPortal  = scanner.next().charAt(0);
-            if (stepPortal==1){
+            char stepPortal = scanner.next().charAt(0);
+            if (stepPortal == 1) {
                 GeneratLocat locat = new GeneratLocat();
                 setLocate(locat);
             }
-            if(stepPortal==2){
+            if (stepPortal == 2) {
 
-                    valueOld = '0';
-                    notUseItem=true;
-                    printLocatt(locate.getLocats());
-                    System.out.println("походите");
+                valueOld = '0';
+                notUseItem = true;
+                printLocatt(locate.getLocats());
+                System.out.println("походите");
             }
-
         }
     }
 
@@ -290,8 +305,8 @@ public class Move {
         char[][] locats = locate.getLocats();
         locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
         locats[oldYValue][oldXValue] = valueOld;
-        if(notUseItem){
-            valueOld='_';
+        if (notUseItem) {
+            valueOld = '_';
         }
 
     }
@@ -303,7 +318,7 @@ public class Move {
             bool = true;
             System.out.println("в верх ходить нельзя");
         }
-        if ((positionXHeroes+1 > locats.length-1) & key == 's') {
+        if ((positionXHeroes + 1 > locats.length - 1) & key == 's') {
             bool = true;
             System.out.println("вниз ходить нельзя");
         }
@@ -311,7 +326,7 @@ public class Move {
             bool = true;
             System.out.println("в лево ходить нельзя");
         }
-        if ((positionYHeroes+1 > locats[positionXHeroes].length-1) & key == 'd') {
+        if ((positionYHeroes + 1 > locats[positionXHeroes].length - 1) & key == 'd') {
             bool = true;
             System.out.println("в право ходить нельзя");
         }
