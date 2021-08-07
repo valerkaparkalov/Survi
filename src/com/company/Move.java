@@ -1,14 +1,20 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Move {
     private Heroes heroes;
     private GeneratLocat locate;
-    private Backpack backpack;
-
+    private Days days;
+    private char valueOld = '_';
+    private char valueNext = '_';
+    private boolean bool;
+    private boolean notUseItem = false;
+    private List<BackPackItems> backPackList = new ArrayList<>();
+    private char eatItems;
 
     public GeneratLocat getLocate() {
         return locate;
@@ -18,18 +24,20 @@ public class Move {
         this.locate = locate;
     }
 
-    private Days days;
-    private char valueOld = '_';
-    private char valueNext = '_';
-    private boolean bool;
-    private boolean notUseItem = false;
+    public char getEatItems() {
+        return eatItems;
+    }
 
-    public Move(Heroes heroes, GeneratLocat locate, Days days, Backpack backpack) {
+    public void setEatItems(char items) {
+        this.eatItems = eatItems;
+    }
+
+    public Move(Heroes heroes, GeneratLocat locate, Days days) {
         this.heroes = heroes;
         this.locate = locate;
         this.days = days;
-        this.backpack = backpack;
     }
+
 
     //метод по ограничению видимости
     public void printLocatt(char[][] array) {
@@ -146,23 +154,37 @@ public class Move {
             // просмотр инвентаря
 
             if (key == 'i') {
-                backpack.viewBackPackList();
+                System.out.println("Ваш инвентарь");
+                for (int i = 0; i < backPackList.size(); i++) {
+                    System.out.print(i + 1 + "-" + backPackList.get(i) + " ");
+                }
+                System.out.println();
+
+
                 System.out.println("1) Сьесть что нибудь\n" +
                         "2)Идти дальше");
                 char choice = scr.next().charAt(0);
                 if (choice == '1') {
-                    backpack.eatItems();
-                    if (backpack.getEatItems() == 'e') {
+                    //
+                    setEatItems('0');
+                    System.out.println("Выберите предмет");
+                    int valueItems = scr.next().charAt(0);
+                    if (valueItems <= backPackList.size() & valueItems > 0) {
+                        setEatItems(backPackList.get(valueItems - 1).toString().charAt(0));
+                        backPackList.remove(valueItems - 1);
+                    }
+
+                    if (getEatItems() == 'e') {
                         heroes.setEat(heroes.getEat() + 20);
                     }
-                    if (backpack.getEatItems() == 'w') {
+                    if (getEatItems() == 'w') {
                         heroes.setWater(heroes.getWater() + 20);
                     }
 
                 }
                 if (choice == '2') {
                     System.out.println("Походите!!!");
-printLocatt(locate.getLocats());
+                    printLocatt(locate.getLocats());
                 }
                 continue;
             }
@@ -217,10 +239,14 @@ printLocatt(locate.getLocats());
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 //todo создать инвентарь с масивом
-                backpack.addChartoBackPackListE();
-
-
+                if (backPackList.size() < 10) {
+                    backPackList.add(new BackPackItems('e'));
+                } else {
+                    System.out.println("инвентарь заполнен");
+                }
             }
+
+
             if (eatKey == '3') {
                 notUseItem = true;
                 valueOld = 'e';
@@ -250,9 +276,14 @@ printLocatt(locate.getLocats());
                 locats[locate.getLineHeroes()][locate.getColumnHeroes()] = 'H';
                 printLocatt(locate.getLocats());
                 //todo создать инвентарь с масивом
-                backpack.addChartoBackPackListW();
-
+                if (backPackList.size() < 10) {
+                    backPackList.add(new BackPackItems('w'));
+                } else {
+                    System.out.println("инвентарь заполнен");
+                }
             }
+
+
             if (eatKey == '3') {
                 valueOld = 'w';
                 notUseItem = true;
